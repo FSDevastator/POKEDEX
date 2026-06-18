@@ -6,7 +6,7 @@ const routerPokedex = Router();
 
 // localhost:3000/capturer/pikachu
 
-routerPokedex.get("/capturer/:nom", postPokemon)
+routerPokedex.post("/capturer/:nom", postPokemon)
 
 // localhost:3000
 
