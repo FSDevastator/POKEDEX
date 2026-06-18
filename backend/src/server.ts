@@ -2,9 +2,6 @@ import express from 'express';
 import dotenv from "dotenv"
 import routerPokedex from './routes/pokedex.route.js';
 
-
-
-
 const PORT = process.env.PORT;
 
 const app = express();
