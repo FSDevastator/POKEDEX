@@ -1,6 +1,5 @@
-import { response, Router, type Request, type Response } from 'express';
+import { type Request, type Response } from 'express';
 
-import prisma from "../../utils/prisma.js"
 import { Prisma } from '../../generated/prisma/client.js'
 
 import pokeDeleteService from '../services/pokeDeleteService.js';

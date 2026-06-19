@@ -1,9 +1,6 @@
 import axios from 'axios'
+import pokeAPI from '../services/externalAPI.js';
 
-const pokeAPI = axios.create({
-    baseURL:'https://pokeapi.co/api/v2/pokemon/',
-    timeout:5000,
-})
 
 pokeAPI.interceptors.response.use((res) => {
     console.log('Recu de pokeAPI <-', res.status);
