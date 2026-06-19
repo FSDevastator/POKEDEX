@@ -1,25 +1,44 @@
+import axios from 'axios'
+
+const pokeAPI = axios.create({
+    baseURL:'https://pokeapi.co/api/v2/pokemon/',
+    timeout:5000,
+})
+
+pokeAPI.interceptors.response.use((res) => {
+    console.log('Recu de pokeAPI <-', res.status);
+    return res
+})
 
 export default async function recuperePokemon(leNom:any) {
-    const reponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${leNom}/`)
 
-    if (!reponse.ok) 
-    {
-        return null
-    } 
+    let resp=undefined;
+
+    try {
+        resp = await pokeAPI.get(leNom)
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log(error.response.status)
+            console.log(error.response.data)
+        } else {
+            console.log("Network error")
+        }
+    }
     
-    const data : any = await reponse.json()
+    if (resp) {
+        
+        const health = resp.data.stats.find( (s:any) => s.stat.name ==='hp').base_stat;
 
-    const hp = data.stats.find( (s:any) => s.stat.name ==='hp').base_stat;
-
-    return {
-        numeroPokedex: data.id,
-        nom: data.name,
-        typePrincipal: TYPES[data.types[0].type.name],
-        typeSecondaire: data.types[1] ? TYPES[data.types[1].type.name]:null,
-        pointsVie: hp,
-        taille: data.height,
-        poids: data.weight,
-        imageURL: data.sprites.front_default,
+        return {
+            numeroPokedex: resp.data.id,
+            nom: resp.data.name,
+            typePrincipal: TYPES[resp.data.types[0].type.name],
+            typeSecondaire: resp.data.types[1] ? TYPES[resp.data.types[1].type.name]:null,
+            pointsVie: health,
+            taille: resp.data.height,
+            poids: resp.data.weight,
+            imageURL: resp.data.sprites.front_default,
+        }
     }
 }
 
