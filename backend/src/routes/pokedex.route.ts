@@ -1,15 +1,28 @@
-import { response, Router, type Request, type Response } from 'express';
+import { Router} from 'express';
+
 import postPokemon from '../controllers/postPokemon.js';
 import getAllPokemon from '../controllers/getAllPokemon.js';
+import updatePokemon from '../controllers/updatePokemon.js';
+import deletePokemon from '../controllers/deletePokemon.js';
 
 const routerPokedex = Router();
 
-// localhost:3000/capturer/pikachu
+// DB CRUD operations
 
-routerPokedex.post("/capturer/:nom", postPokemon)
+// CREATE
+// localhost:3000/capturer/nom
+routerPokedex.post("/capturer/:nom",postPokemon)
 
-// localhost:3000
+// READ
+// localhost:3000/pokedex
+routerPokedex.get("/",getAllPokemon)
 
-routerPokedex.get("/", getAllPokemon)
+// UPDATE
+// localhost:3000/pokedex/update/pikachu
+routerPokedex.patch("/update/:pokemonName",updatePokemon)
+
+// DELETE
+// localhost:3000/delete/
+routerPokedex.post("/delete/",deletePokemon)
 
 export default routerPokedex;

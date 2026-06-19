@@ -7,7 +7,6 @@ export default async function recuperePokemon(leNom:any) {
         return null
     } 
     
-
     const data : any = await reponse.json()
 
     const hp = data.stats.find( (s:any) => s.stat.name ==='hp').base_stat;
