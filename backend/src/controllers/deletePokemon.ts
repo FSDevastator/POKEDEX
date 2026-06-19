@@ -1,6 +1,9 @@
 import { response, Router, type Request, type Response } from 'express';
+
 import prisma from "../../utils/prisma.js"
 import { Prisma } from '../../generated/prisma/client.js'
+
+import pokeDeleteService from '../services/pokeDeleteService.js';
 
 export default async function deletePokemon(req: Request, res: Response) {
 
@@ -11,16 +14,10 @@ export default async function deletePokemon(req: Request, res: Response) {
 
     const deletionIds = req.body;
 
-    let deletedPokemon = undefined;
+    let result = undefined;
 
     try {
-        deletedPokemon = await prisma.pokemon.deleteMany({
-            where: {
-                id: {
-                    in: deletionIds
-                }
-            }
-        })
+        result = await pokeDeleteService(deletionIds)
     } catch (error) {
         if ( error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === "P2014"){
@@ -36,8 +33,8 @@ export default async function deletePokemon(req: Request, res: Response) {
 
     }
 
-    if (deletedPokemon) {
-        res.json(deletedPokemon)
+    if (result) {
+        res.json(result)
     }
 
 }
