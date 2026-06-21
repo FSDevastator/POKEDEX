@@ -1,25 +1,19 @@
 import dbDeleteRecords from "../repositories/dbDeleteRecords.js";
 
 
-export default async function pokeDeleteService(deletionIds:Array<number>) {
+export default async function pokeDeleteService(deletionId:number) {
     
-    if (deletionIds === undefined) {
-        console.log("deletion error in service layer")
-        return
+    if (deletionId === undefined) {
+        console.log("Deletion error in service layer: undefined type Id provided.")
+        throw new TypeError("Deletion id must be non-null.")
     }
 
-    // transforms
-
-    let result = undefined
+    // <-- Service transforms here
 
     try {
-        result = await dbDeleteRecords(deletionIds)
+        return await dbDeleteRecords(deletionId)
     } catch(error) {
         throw error
-    }
-
-    if (result) {
-        return result
     }
 
 

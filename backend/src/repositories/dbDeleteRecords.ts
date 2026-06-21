@@ -1,28 +1,21 @@
 import prisma from "../../utils/prisma.js"
 
 
-export default async function dbDeleteRecords(deletionIds:Array<number>) {
+export default async function dbDeleteRecords(deletionId:number) {
     
-    if (deletionIds === undefined) {
+    if (deletionId === undefined) {
         console.log("deletion error in db layer")
-        return
+        throw new TypeError("Deletion id must be non-null.")
     }
-
-    let result = undefined
 
     try {
-        result = await prisma.pokemon.deleteMany({
+        const result = await prisma.pokemon.delete({
             where: {
-                id: {
-                    in: deletionIds
-                }
+                id: deletionId
             }
         })
+        return result
     } catch (error) {
         throw error
-    }
-
-    if (result) {
-        return result
     }
 }

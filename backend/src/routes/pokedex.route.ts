@@ -2,6 +2,7 @@ import { Router} from 'express';
 
 import postPokemon from '../controllers/postPokemon.js';
 import getAllPokemon from '../controllers/getAllPokemon.js';
+import getPokemon from '../controllers/getPokemon.js';
 import updatePokemon from '../controllers/updatePokemon.js';
 import deletePokemon from '../controllers/deletePokemon.js';
 import listerDeAPI from '../controllers/listFromAPI.js';
@@ -20,13 +21,14 @@ routerPokedex.get("/",getAllPokemon)
 // locahost:3000/pokedex/api - liste de pokemon dans l'API
 routerPokedex.get("/api", listerDeAPI)
 // localhost:3000/pokedex/api/:nom
-routerPokedex.get("/api/:nom", async ()=>{})
+routerPokedex.get("/api/:nom", getPokemon)
+
 // UPDATE
 // localhost:3000/pokedex/update/pikachu
 routerPokedex.patch("/update/:pokemonName",updatePokemon)
 
 // DELETE
 // localhost:3000/delete/
-routerPokedex.post("/delete/",deletePokemon)
+routerPokedex.delete("/:id",deletePokemon)
 
 export default routerPokedex;
