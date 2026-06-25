@@ -7,6 +7,9 @@ import updatePokemon from '../controllers/updatePokemon.js';
 import deletePokemon from '../controllers/deletePokemon.js';
 import listerDeAPI from '../controllers/listFromAPI.js';
 
+import { authentifier, exigerRole } from '../middleware/auth.js';
+
+
 const routerPokedex = Router();
 
 // DB CRUD operations
@@ -25,7 +28,7 @@ routerPokedex.get("/api/:nom", getPokemon)
 
 // UPDATE
 // localhost:3000/pokedex/update/pikachu
-routerPokedex.patch("/update/:pokemonName",updatePokemon)
+routerPokedex.patch("/update/:pokemonName",authentifier,exigerRole("ADMIN"),updatePokemon)
 
 // DELETE
 // localhost:3000/delete/
